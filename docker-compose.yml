@@ -1,0 +1,6 @@
+﻿services:
+  betterthanyou.web:
+    image: betterthanyou.web
+    build:
+      context: .
+      dockerfile: BetterThanYou.Web/Dockerfile

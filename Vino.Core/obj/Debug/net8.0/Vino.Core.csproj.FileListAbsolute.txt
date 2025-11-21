@@ -1,0 +1,15 @@
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Core\bin\Debug\net8.0\Vino.Core.deps.json
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Core\bin\Debug\net8.0\Vino.Core.dll
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Core\bin\Debug\net8.0\Vino.Core.pdb
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Core\bin\Debug\net8.0\Vino.SharedKernel.dll
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Core\bin\Debug\net8.0\Vino.SharedKernel.pdb
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Core\obj\Debug\net8.0\Vino.Core.csproj.AssemblyReference.cache
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Core\obj\Debug\net8.0\Vino.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Core\obj\Debug\net8.0\Vino.Core.AssemblyInfoInputs.cache
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Core\obj\Debug\net8.0\Vino.Core.AssemblyInfo.cs
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Core\obj\Debug\net8.0\Vino.Core.csproj.CoreCompileInputs.cache
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Core\obj\Debug\net8.0\Vino.Core.csproj.Up2Date
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Core\obj\Debug\net8.0\Vino.Core.dll
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Core\obj\Debug\net8.0\refint\Vino.Core.dll
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Core\obj\Debug\net8.0\Vino.Core.pdb
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Core\obj\Debug\net8.0\ref\Vino.Core.dll

@@ -1,0 +1,11 @@
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.SharedKernel\bin\Debug\net8.0\Vino.SharedKernel.deps.json
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.SharedKernel\bin\Debug\net8.0\Vino.SharedKernel.dll
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.SharedKernel\bin\Debug\net8.0\Vino.SharedKernel.pdb
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.SharedKernel\obj\Debug\net8.0\Vino.SharedKernel.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.SharedKernel\obj\Debug\net8.0\Vino.SharedKernel.AssemblyInfoInputs.cache
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.SharedKernel\obj\Debug\net8.0\Vino.SharedKernel.AssemblyInfo.cs
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.SharedKernel\obj\Debug\net8.0\Vino.SharedKernel.csproj.CoreCompileInputs.cache
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.SharedKernel\obj\Debug\net8.0\Vino.SharedKernel.dll
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.SharedKernel\obj\Debug\net8.0\refint\Vino.SharedKernel.dll
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.SharedKernel\obj\Debug\net8.0\Vino.SharedKernel.pdb
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.SharedKernel\obj\Debug\net8.0\ref\Vino.SharedKernel.dll

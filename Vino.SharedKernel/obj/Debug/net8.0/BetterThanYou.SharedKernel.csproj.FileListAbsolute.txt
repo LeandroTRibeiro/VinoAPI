@@ -1,0 +1,11 @@
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\BetterThanYou.SharedKernel\bin\Debug\net8.0\BetterThanYou.SharedKernel.deps.json
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\BetterThanYou.SharedKernel\bin\Debug\net8.0\BetterThanYou.SharedKernel.dll
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\BetterThanYou.SharedKernel\bin\Debug\net8.0\BetterThanYou.SharedKernel.pdb
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\BetterThanYou.SharedKernel\obj\Debug\net8.0\BetterThanYou.SharedKernel.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\BetterThanYou.SharedKernel\obj\Debug\net8.0\BetterThanYou.SharedKernel.AssemblyInfoInputs.cache
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\BetterThanYou.SharedKernel\obj\Debug\net8.0\BetterThanYou.SharedKernel.AssemblyInfo.cs
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\BetterThanYou.SharedKernel\obj\Debug\net8.0\BetterThanYou.SharedKernel.csproj.CoreCompileInputs.cache
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\BetterThanYou.SharedKernel\obj\Debug\net8.0\BetterThanYou.SharedKernel.dll
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\BetterThanYou.SharedKernel\obj\Debug\net8.0\refint\BetterThanYou.SharedKernel.dll
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\BetterThanYou.SharedKernel\obj\Debug\net8.0\BetterThanYou.SharedKernel.pdb
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\BetterThanYou.SharedKernel\obj\Debug\net8.0\ref\BetterThanYou.SharedKernel.dll

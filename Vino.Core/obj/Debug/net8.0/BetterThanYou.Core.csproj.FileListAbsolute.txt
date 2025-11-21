@@ -1,0 +1,15 @@
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\BetterThanYou.Core\bin\Debug\net8.0\BetterThanYou.Core.deps.json
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\BetterThanYou.Core\bin\Debug\net8.0\BetterThanYou.Core.dll
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\BetterThanYou.Core\bin\Debug\net8.0\BetterThanYou.Core.pdb
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\BetterThanYou.Core\bin\Debug\net8.0\BetterThanYou.SharedKernel.dll
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\BetterThanYou.Core\bin\Debug\net8.0\BetterThanYou.SharedKernel.pdb
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\BetterThanYou.Core\obj\Debug\net8.0\BetterThanYou.Core.csproj.AssemblyReference.cache
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\BetterThanYou.Core\obj\Debug\net8.0\BetterThanYou.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\BetterThanYou.Core\obj\Debug\net8.0\BetterThanYou.Core.AssemblyInfoInputs.cache
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\BetterThanYou.Core\obj\Debug\net8.0\BetterThanYou.Core.AssemblyInfo.cs
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\BetterThanYou.Core\obj\Debug\net8.0\BetterThanYou.Core.csproj.CoreCompileInputs.cache
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\BetterThanYou.Core\obj\Debug\net8.0\BetterTh.D1DE8662.Up2Date
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\BetterThanYou.Core\obj\Debug\net8.0\BetterThanYou.Core.dll
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\BetterThanYou.Core\obj\Debug\net8.0\refint\BetterThanYou.Core.dll
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\BetterThanYou.Core\obj\Debug\net8.0\BetterThanYou.Core.pdb
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\BetterThanYou.Core\obj\Debug\net8.0\ref\BetterThanYou.Core.dll
