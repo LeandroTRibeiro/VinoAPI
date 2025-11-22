@@ -13,3 +13,4 @@ C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Core\obj\Debug\net8.
 C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Core\obj\Debug\net8.0\refint\Vino.Core.dll
 C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Core\obj\Debug\net8.0\Vino.Core.pdb
 C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Core\obj\Debug\net8.0\ref\Vino.Core.dll
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Core\obj\Debug\net8.0\Vino.Core.sourcelink.json

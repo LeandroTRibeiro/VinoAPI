@@ -133,3 +133,4 @@ C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Web\obj\Debug\net8.0
 C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Web\obj\Debug\net8.0\Vino.Web.pdb
 C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Web\obj\Debug\net8.0\Vino.Web.genruntimeconfig.cache
 C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Web\obj\Debug\net8.0\ref\Vino.Web.dll
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Web\obj\Debug\net8.0\Vino.Web.sourcelink.json

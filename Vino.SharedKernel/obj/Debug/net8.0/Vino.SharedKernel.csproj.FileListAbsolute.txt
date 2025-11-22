@@ -9,3 +9,4 @@ C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.SharedKernel\obj\Deb
 C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.SharedKernel\obj\Debug\net8.0\refint\Vino.SharedKernel.dll
 C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.SharedKernel\obj\Debug\net8.0\Vino.SharedKernel.pdb
 C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.SharedKernel\obj\Debug\net8.0\ref\Vino.SharedKernel.dll
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.SharedKernel\obj\Debug\net8.0\Vino.SharedKernel.sourcelink.json

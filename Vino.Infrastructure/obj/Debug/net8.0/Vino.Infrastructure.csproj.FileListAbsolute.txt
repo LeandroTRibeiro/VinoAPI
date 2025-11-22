@@ -17,3 +17,4 @@ C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Infrastructure\obj\D
 C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Infrastructure\obj\Debug\net8.0\Vino.Infrastructure.pdb
 C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Infrastructure\obj\Debug\net8.0\Vino.Infrastructure.genruntimeconfig.cache
 C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Infrastructure\obj\Debug\net8.0\ref\Vino.Infrastructure.dll
+C:\Users\Usuario\Desktop\programStudy\BetterThanYouAPI\Vino.Infrastructure\obj\Debug\net8.0\Vino.Infrastructure.sourcelink.json
