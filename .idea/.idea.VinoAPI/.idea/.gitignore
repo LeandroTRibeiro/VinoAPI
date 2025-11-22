@@ -11,3 +11,12 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+
+# Environment files
+.env
+.env.local
+.env.production
+.env.*.local
+
+# Sensitive configuration
+appsettings.Production.json

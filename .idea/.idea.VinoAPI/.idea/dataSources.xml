@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:postgresql://localhost:5433/appdb</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="vinodb@dpg-d4gft795pdvs738ippm0-a.oregon-postgres.render.com" uuid="838df01b-e856-4c2b-88ff-f8f8d45bd2c6">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://dpg-d4gft795pdvs738ippm0-a.oregon-postgres.render.com:5432/vinodb</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

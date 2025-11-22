@@ -8,11 +8,49 @@ using Microsoft.EntityFrameworkCore;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using DotNetEnv;
+
+// ✅ CARREGA O .ENV
+if (File.Exists(".env"))
+{
+    Env.Load();
+    Console.WriteLine("✅ Arquivo .env carregado");
+}
+else
+{
+    Console.WriteLine("ℹ️ Arquivo .env não encontrado, usando variáveis de ambiente do sistema");
+}
 
 var builder = WebApplication.CreateBuilder(args);
 
-var jwtSettings = builder.Configuration.GetSection("Jwt");
-var key = Encoding.UTF8.GetBytes(jwtSettings["Key"]);
+// ✅ CONFIGURA A CONNECTION STRING
+var connectionString = Environment.GetEnvironmentVariable("DB_HOST") != null
+    ? $"Host={Environment.GetEnvironmentVariable("DB_HOST")};" +
+      $"Port={Environment.GetEnvironmentVariable("DB_PORT")};" +
+      $"Database={Environment.GetEnvironmentVariable("DB_NAME")};" +
+      $"Username={Environment.GetEnvironmentVariable("DB_USER")};" +
+      $"Password={Environment.GetEnvironmentVariable("DB_PASSWORD")};" +
+      "Pooling=true;"
+    : builder.Configuration.GetConnectionString("DefaultConnection");
+
+Console.WriteLine($"📊 Connection String configurada: {connectionString?.Substring(0, Math.Min(50, connectionString?.Length ?? 0))}...");
+
+// ✅ CONFIGURA O JWT
+var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY") 
+    ?? builder.Configuration["Jwt:Key"];
+var jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER") 
+    ?? builder.Configuration["Jwt:Issuer"];
+var jwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE") 
+    ?? builder.Configuration["Jwt:Audience"];
+
+if (string.IsNullOrEmpty(jwtKey))
+{
+    throw new InvalidOperationException("JWT Key não configurada!");
+}
+
+Console.WriteLine($"🔐 JWT configurado - Issuer: {jwtIssuer}, Audience: {jwtAudience}");
+
+var key = Encoding.UTF8.GetBytes(jwtKey);
 
 builder.Services.AddAuthentication(options =>
 {
@@ -27,8 +65,8 @@ builder.Services.AddAuthentication(options =>
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
 
-        ValidIssuer = jwtSettings["Issuer"],
-        ValidAudience = jwtSettings["Audience"],
+        ValidIssuer = jwtIssuer,
+        ValidAudience = jwtAudience,
         IssuerSigningKey = new SymmetricSecurityKey(key)
     };
 });
@@ -46,8 +84,9 @@ builder.Services.AddProblemDetails();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c => c.EnableAnnotations());
+
 builder.Services.AddDbContext<AppDbContext>(options => 
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(connectionString));
 
 var app = builder.Build();
 
@@ -63,6 +102,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+// ✅ APLICA MIGRATIONS AUTOMATICAMENTE
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -73,13 +113,13 @@ using (var scope = app.Services.CreateScope())
         
         logger.LogInformation("Aplicando migrations...");
         context.Database.Migrate();
-        logger.LogInformation("Migrations aplicadas com sucesso!");
+        logger.LogInformation("✅ Migrations aplicadas com sucesso!");
     }
     catch (Exception ex)
     {
         var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "Erro ao aplicar migrations no banco de dados");
-        throw; 
+        logger.LogError(ex, "❌ Erro ao aplicar migrations");
+        throw;
     }
 }
 
