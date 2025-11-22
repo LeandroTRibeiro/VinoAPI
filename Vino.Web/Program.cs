@@ -21,6 +21,15 @@ else
     Console.WriteLine("ℹ️ Arquivo .env não encontrado, usando variáveis de ambiente do sistema");
 }
 
+// 🔍 DEBUG - Mostra variáveis de ambiente
+Console.WriteLine("=== DEBUG VARIÁVEIS DE AMBIENTE ===");
+Console.WriteLine($"DB_HOST: {Environment.GetEnvironmentVariable("DB_HOST")}");
+Console.WriteLine($"JWT_KEY existe? {!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("JWT_KEY"))}");
+Console.WriteLine($"JWT_KEY length: {Environment.GetEnvironmentVariable("JWT_KEY")?.Length ?? 0}");
+Console.WriteLine($"JWT_ISSUER: {Environment.GetEnvironmentVariable("JWT_ISSUER")}");
+Console.WriteLine($"JWT_AUDIENCE: {Environment.GetEnvironmentVariable("JWT_AUDIENCE")}");
+Console.WriteLine("===================================");
+
 var builder = WebApplication.CreateBuilder(args);
 
 // ✅ CONFIGURA A CONNECTION STRING
