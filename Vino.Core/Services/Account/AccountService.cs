@@ -22,6 +22,7 @@ public class AccountService : IAccountService
         _accountRepository = accountRepository;
         _configuration = configuration;
     }
+    
     public async Task<AccountDto> CreateAsync(string email, string password, string name)
     {
         if (!EmailValidation.IsValid(email))
@@ -72,7 +73,21 @@ public class AccountService : IAccountService
             throw new UnauthorizedAccessException("Invalid credentials");
 
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]);
+        
+        var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY") 
+            ?? _configuration["Jwt:Key"];
+        var jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER") 
+            ?? _configuration["Jwt:Issuer"];
+        var jwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE") 
+            ?? _configuration["Jwt:Audience"];
+        var jwtExpireMinutes = Environment.GetEnvironmentVariable("JWT_EXPIRE_MINUTES") 
+            ?? _configuration["Jwt:ExpireMinutes"] 
+            ?? "60";
+        
+        if (string.IsNullOrEmpty(jwtKey))
+            throw new InvalidOperationException("JWT Key não configurada!");
+        
+        var key = Encoding.UTF8.GetBytes(jwtKey);
 
         var claims = new[]
         {
@@ -84,11 +99,9 @@ public class AccountService : IAccountService
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(claims),
-            Expires = DateTime.UtcNow.AddMinutes(
-                double.Parse(_configuration["Jwt:ExpireMinutes"] ?? "60")
-            ),
-            Issuer = _configuration["Jwt:Issuer"],
-            Audience = _configuration["Jwt:Audience"],
+            Expires = DateTime.UtcNow.AddMinutes(double.Parse(jwtExpireMinutes)),
+            Issuer = jwtIssuer,
+            Audience = jwtAudience,
             SigningCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(key),
                 SecurityAlgorithms.HmacSha256Signature
