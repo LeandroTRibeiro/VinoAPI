@@ -10,29 +10,13 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using DotNetEnv;
 
-// ✅ CARREGA O .ENV
 if (File.Exists(".env"))
 {
     Env.Load();
-    Console.WriteLine("✅ Arquivo .env carregado");
 }
-else
-{
-    Console.WriteLine("ℹ️ Arquivo .env não encontrado, usando variáveis de ambiente do sistema");
-}
-
-// 🔍 DEBUG - Mostra variáveis de ambiente
-Console.WriteLine("=== DEBUG VARIÁVEIS DE AMBIENTE ===");
-Console.WriteLine($"DB_HOST: {Environment.GetEnvironmentVariable("DB_HOST")}");
-Console.WriteLine($"JWT_KEY existe? {!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("JWT_KEY"))}");
-Console.WriteLine($"JWT_KEY length: {Environment.GetEnvironmentVariable("JWT_KEY")?.Length ?? 0}");
-Console.WriteLine($"JWT_ISSUER: {Environment.GetEnvironmentVariable("JWT_ISSUER")}");
-Console.WriteLine($"JWT_AUDIENCE: {Environment.GetEnvironmentVariable("JWT_AUDIENCE")}");
-Console.WriteLine("===================================");
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ✅ CONFIGURA A CONNECTION STRING
 var connectionString = Environment.GetEnvironmentVariable("DB_HOST") != null
     ? $"Host={Environment.GetEnvironmentVariable("DB_HOST")};" +
       $"Port={Environment.GetEnvironmentVariable("DB_PORT")};" +
@@ -42,9 +26,6 @@ var connectionString = Environment.GetEnvironmentVariable("DB_HOST") != null
       "Pooling=true;"
     : builder.Configuration.GetConnectionString("DefaultConnection");
 
-Console.WriteLine($"📊 Connection String configurada: {connectionString?.Substring(0, Math.Min(50, connectionString?.Length ?? 0))}...");
-
-// ✅ CONFIGURA O JWT
 var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY") 
     ?? builder.Configuration["Jwt:Key"];
 var jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER") 
@@ -56,8 +37,6 @@ if (string.IsNullOrEmpty(jwtKey))
 {
     throw new InvalidOperationException("JWT Key não configurada!");
 }
-
-Console.WriteLine($"🔐 JWT configurado - Issuer: {jwtIssuer}, Audience: {jwtAudience}");
 
 var key = Encoding.UTF8.GetBytes(jwtKey);
 
@@ -111,7 +90,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// ✅ APLICA MIGRATIONS AUTOMATICAMENTE
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -122,12 +100,12 @@ using (var scope = app.Services.CreateScope())
         
         logger.LogInformation("Aplicando migrations...");
         context.Database.Migrate();
-        logger.LogInformation("✅ Migrations aplicadas com sucesso!");
+        logger.LogInformation("Migrations aplicadas com sucesso!");
     }
     catch (Exception ex)
     {
         var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "❌ Erro ao aplicar migrations");
+        logger.LogError(ex, "Erro ao aplicar migrations");
         throw;
     }
 }
