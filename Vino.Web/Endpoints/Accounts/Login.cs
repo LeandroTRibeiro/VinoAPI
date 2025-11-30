@@ -7,8 +7,8 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace BetterThanYou.Web.Endpoints.Accounts;
 
 public class Login : EndpointBaseAsync
-    .WithRequest<LoginRequest>
-    .WithResult<LoginResponse>
+    .WithRequest<AccountLoginRequest>
+    .WithResult<AccountLoginResponse>
 {
     private readonly IAccountService _accountService;
 
@@ -24,11 +24,11 @@ public class Login : EndpointBaseAsync
         OperationId = "Login",
         Tags = new[] { "Authentication" }
     )]
-    public async override Task<LoginResponse> HandleAsync(LoginRequest request, CancellationToken cancellationToken = new CancellationToken())
+    public async override Task<AccountLoginResponse> HandleAsync(AccountLoginRequest request, CancellationToken cancellationToken = new CancellationToken())
     {
         var result = await _accountService.LoginAsync(request.Email, request.Password);
 
-        return new LoginResponse
+        return new AccountLoginResponse
         {
             Id = result.Id,
             Email = result.Email,

@@ -6,8 +6,8 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace BetterThanYou.Web.Endpoints.Accounts;
 
 public class Create : EndpointBaseAsync
-    .WithRequest<CreateRequest>
-    .WithActionResult<CreateResponse>
+    .WithRequest<AccountCreateRequest>
+    .WithActionResult<AccountCreateResponse>
 {
     private readonly IAccountService _accountService;
 
@@ -22,11 +22,11 @@ public class Create : EndpointBaseAsync
         Description = "Registers a new account (minimal stub)",
         OperationId = "Accounts.Create",
         Tags = new[] { "Accounts" })]
-    public override async Task<ActionResult<CreateResponse>> HandleAsync([FromBody]CreateRequest request, CancellationToken cancellationToken = new CancellationToken())
+    public override async Task<ActionResult<AccountCreateResponse>> HandleAsync([FromBody]AccountCreateRequest request, CancellationToken cancellationToken = new CancellationToken())
     {
         var accountDto = await _accountService.CreateAsync(request.Email, request.Password, request.Name);
 
-        var response = new CreateResponse
+        var response = new AccountCreateResponse
         {
             Id = accountDto.Id,
             Email = accountDto.Email,

@@ -1,6 +1,6 @@
 ﻿namespace BetterThanYou.Web.Endpoints.Accounts;
 
-public class LoginResponse
+public class AccountLoginResponse
 {
     public Guid Id { get; set; } 
     public string Email { get; set; }

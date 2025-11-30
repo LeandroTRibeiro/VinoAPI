@@ -1,0 +1,6 @@
+﻿namespace BetterThanYou.Core.Interfaces.Product;
+
+public interface IProductRepository
+{
+    Task<Entities.Product> CreateAsync(Entities.Product product);
+}

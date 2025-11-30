@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Vino.SharedKernel")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8bb743948b27b379a5bf8311c23e724b225716ce")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+214b63d1fc0f45a806e526e6b554ef2228fef926")]
 [assembly: System.Reflection.AssemblyProductAttribute("Vino.SharedKernel")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Vino.SharedKernel")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

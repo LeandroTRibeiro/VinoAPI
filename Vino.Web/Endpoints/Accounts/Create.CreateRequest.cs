@@ -1,6 +1,6 @@
 ﻿namespace BetterThanYou.Web.Endpoints.Accounts;
 
-public class CreateRequest
+public class AccountCreateRequest
 {
     public required string Email { get; set; }
     public required string Password { get; set; }
