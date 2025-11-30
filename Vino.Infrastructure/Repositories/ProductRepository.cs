@@ -29,4 +29,11 @@ public class ProductRepository : IProductRepository
             .ToListAsync();
         
     }
+
+    public async Task<Product> GetByIdAsync(Guid id)
+    {
+        return await _db.Products
+            .Where(p => p.Ativo)
+            .FirstOrDefaultAsync(p => p.Id == id);
+    }
 }

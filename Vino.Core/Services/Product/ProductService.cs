@@ -77,4 +77,28 @@ public class ProductService : IProductService
             Ativo = p.Ativo
         }).ToList();    
     }
+
+    public async Task<ProdutctDto> GetByIdAsync(Guid id)
+    {
+        var product = await _productRepository.GetByIdAsync(id);
+
+        if (product == null)
+            return null;
+
+        return new ProdutctDto
+        {
+            Id = product.Id,
+            Nome = product.Nome,
+            Descricao = product.Descricao,
+            QuantidadeEstoque = product.QuantidadeEstoque,
+            PrecoCusto = product.PrecoCusto,
+            PrecoVenda = product.PrecoVenda,
+            FotoUrl = product.FotoUrl,
+            CriadoPor = product.CriadoPor,
+            DataCriacao = product.DataCriacao,
+            ModificadoPor = product.ModificadoPor,
+            DataModificacao = product.DataModificacao,
+            Ativo = product.Ativo
+        };    
+    }
 }
