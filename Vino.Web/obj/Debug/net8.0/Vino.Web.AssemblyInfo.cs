@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Vino.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+43237cd067964d5b021cdc77a15e8b4d389da5a8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+595e6fad9fcd2141253080fd18753fd2e19f3024")]
 [assembly: System.Reflection.AssemblyProductAttribute("Vino.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Vino.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

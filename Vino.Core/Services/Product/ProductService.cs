@@ -101,4 +101,65 @@ public class ProductService : IProductService
             Ativo = product.Ativo
         };    
     }
+    
+    public async Task<ProdutctDto> UpdateAsync(Guid id, string nome, string descricao, 
+        int quantidadeEstoque, decimal precoCusto, decimal precoVenda, string? fotoUrl, string modificadoPor)
+    {
+        if (string.IsNullOrWhiteSpace(nome))
+            throw new ArgumentException("Nome é obrigatório", nameof(nome));
+
+        if (quantidadeEstoque < 0)
+            throw new ArgumentException("Quantidade em estoque não pode ser negativa", nameof(quantidadeEstoque));
+
+        if (precoCusto < 0)
+            throw new ArgumentException("Preço de custo não pode ser negativo", nameof(precoCusto));
+
+        if (precoVenda < 0)
+            throw new ArgumentException("Preço de venda não pode ser negativo", nameof(precoVenda));
+
+        var product = await _productRepository.GetByIdAsync(id);
+    
+        if (product == null)
+            throw new KeyNotFoundException("Produto não encontrado");
+
+        product.Nome = nome;
+        product.Descricao = descricao;
+        product.QuantidadeEstoque = quantidadeEstoque;
+        product.PrecoCusto = precoCusto;
+        product.PrecoVenda = precoVenda;
+    
+        if (!string.IsNullOrEmpty(fotoUrl))
+            product.FotoUrl = fotoUrl;
+    
+        product.ModificadoPor = modificadoPor;
+        product.DataModificacao = DateTime.UtcNow;
+
+        var updated = await _productRepository.UpdateAsync(product);
+
+        return new ProdutctDto
+        {
+            Id = updated.Id,
+            Nome = updated.Nome,
+            Descricao = updated.Descricao,
+            QuantidadeEstoque = updated.QuantidadeEstoque,
+            PrecoCusto = updated.PrecoCusto,
+            PrecoVenda = updated.PrecoVenda,
+            FotoUrl = updated.FotoUrl,
+            CriadoPor = updated.CriadoPor,
+            DataCriacao = updated.DataCriacao,
+            ModificadoPor = updated.ModificadoPor,
+            DataModificacao = updated.DataModificacao,
+            Ativo = updated.Ativo
+        };
+    }
+    
+    public async Task DeleteAsync(Guid id)
+    {
+        var product = await _productRepository.GetByIdAsync(id);
+    
+        if (product == null)
+            throw new KeyNotFoundException("Produto não encontrado");
+
+        await _productRepository.DeleteAsync(product);
+    }
 }

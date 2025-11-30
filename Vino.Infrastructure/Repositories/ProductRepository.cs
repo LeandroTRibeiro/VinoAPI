@@ -36,4 +36,18 @@ public class ProductRepository : IProductRepository
             .Where(p => p.Ativo)
             .FirstOrDefaultAsync(p => p.Id == id);
     }
+    
+    public async Task<Product> UpdateAsync(Product product)
+    {
+        _db.Products.Update(product);
+        await _db.SaveChangesAsync();
+        return product;
+    }
+    
+    public async Task DeleteAsync(Product product)
+    {
+        product.Ativo = false;
+        _db.Products.Update(product);
+        await _db.SaveChangesAsync();
+    }
 }
