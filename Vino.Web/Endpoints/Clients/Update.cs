@@ -1,4 +1,5 @@
 ﻿using Ardalis.ApiEndpoints;
+using BetterThanYou.Core.Entities;
 using BetterThanYou.Core.Interfaces.Client;
 using BetterThanYou.Core.Interfaces.File;
 using Microsoft.AspNetCore.Authorization;
@@ -42,6 +43,25 @@ public class Update : EndpointBaseAsync
             fotoUrl = await _fileStorageService.SaveImageAsync(stream, request.Foto.FileName);
         }
 
+        // Deserializar telefones
+        List<ContactPhone> telefones = new List<ContactPhone>();
+        if (!string.IsNullOrEmpty(request.Telefones))
+        {
+            try
+            {
+                var options = new System.Text.Json.JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true  // ← ADICIONE ESTA OPÇÃO
+                };
+                telefones = System.Text.Json.JsonSerializer.Deserialize<List<ContactPhone>>(request.Telefones, options) 
+                            ?? new List<ContactPhone>();
+            }
+            catch
+            {
+                // Se falhar, continua com lista vazia
+            }
+        }
+
         var clientDto = await _clientService.UpdateAsync(
             request.Id,
             request.NomeFantasia,
@@ -52,7 +72,7 @@ public class Update : EndpointBaseAsync
             request.Cidade,
             request.Estado,
             request.Cep,
-            request.Telefones,
+            telefones,
             fotoUrl,
             userId);
 

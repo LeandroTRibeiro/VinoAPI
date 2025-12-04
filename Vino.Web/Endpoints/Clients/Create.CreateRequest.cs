@@ -12,6 +12,6 @@ public class ClientCreateRequest
     public string? Cidade { get; set; }
     public string? Estado { get; set; }
     public string? Cep { get; set; }
-    public List<ContactPhone> Telefones { get; set; } = new List<ContactPhone>();
+    public string? Telefones { get; set; } 
     public IFormFile? Foto { get; set; }
 }
