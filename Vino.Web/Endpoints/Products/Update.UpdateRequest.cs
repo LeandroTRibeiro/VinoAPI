@@ -2,7 +2,7 @@
 
 namespace BetterThanYou.Web.Endpoints.Products;
 
-public class UpdateRequest
+public class ProductUpdateRequest
 {
     public Guid Id { get; set; } 
     public required string Nome { get; set; }

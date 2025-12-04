@@ -10,7 +10,7 @@ public class AppDbContext : DbContext
 
     public DbSet<Account> Accounts => Set<Account>();
     public DbSet<Product> Products => Set<Product>();
-
+    public DbSet<Client> Clients => Set<Client>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

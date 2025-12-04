@@ -9,7 +9,7 @@ namespace BetterThanYou.Web.Endpoints.Products;
 [Authorize]
 public class List : EndpointBaseAsync
     .WithoutRequest
-    .WithActionResult<ListResponse>
+    .WithActionResult<ProductListResponse>
 {
     private readonly IProductService _productService;
 
@@ -24,11 +24,11 @@ public class List : EndpointBaseAsync
         Description = "Returns a list of all products",
         OperationId = "Products.List",
         Tags = new[] { "Products" })]
-    public override async Task<ActionResult<ListResponse>> HandleAsync(
+    public override async Task<ActionResult<ProductListResponse>> HandleAsync(
         CancellationToken cancellationToken = default)
     {
         var products = await _productService.GetAllAsync();
         
-        return Ok(new ListResponse { Products = products });
+        return Ok(new ProductListResponse { Products = products });
     }
 }

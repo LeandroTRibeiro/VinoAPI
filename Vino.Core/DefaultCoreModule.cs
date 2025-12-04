@@ -1,8 +1,10 @@
 ﻿using Autofac;
+using BetterThanYou.Core.Interfaces.Client;
 using BetterThanYou.Core.Interfaces.File;
 using BetterThanYou.Core.Interfaces.Product;
 using BetterThanYou.Core.Interfaces.Services.Account;
 using BetterThanYou.Core.Services.Account;
+using BetterThanYou.Core.Services.Client;
 using BetterThanYou.Core.Services.Product;
 using BetterThanYou.Infrastructure.Services;
 
@@ -22,6 +24,10 @@ public class DefaultCoreModule : Module
         
         builder.RegisterType<FileStorageService>()
             .As<IFileStorageService>()
+            .InstancePerLifetimeScope();
+        
+        builder.RegisterType<ClientService>()
+            .As<IClientService>()
             .InstancePerLifetimeScope();
     }
 }

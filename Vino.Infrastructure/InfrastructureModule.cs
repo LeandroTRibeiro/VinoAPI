@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using BetterThanYou.Core.Interfaces.Client;
 using BetterThanYou.Core.Interfaces.File;
 using BetterThanYou.Core.Interfaces.Product;
 using BetterThanYou.Core.Interfaces.Services.Account;
@@ -21,6 +22,10 @@ public class InfrastructureModule : Module
         
         builder.RegisterType<CloudinaryFileStorageService>()
             .As<IFileStorageService>()
+            .InstancePerLifetimeScope();
+        
+        builder.RegisterType<ClientRepository>()
+            .As<IClientRepository>()
             .InstancePerLifetimeScope();
     }
     

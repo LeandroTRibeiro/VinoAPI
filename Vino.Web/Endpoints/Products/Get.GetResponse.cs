@@ -2,7 +2,7 @@
 
 namespace BetterThanYou.Web.Endpoints.Products;
 
-public class GetResponse
+public class ProductGetResponse
 {
     public ProdutctDto Product { get; set; }
 }

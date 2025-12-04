@@ -9,7 +9,7 @@ namespace BetterThanYou.Web.Endpoints.Products;
 [Authorize]
 public class Get : EndpointBaseAsync
     .WithRequest<Guid>
-    .WithActionResult<GetResponse>
+    .WithActionResult<ProductGetResponse>
 {
     private readonly IProductService _productService;
 
@@ -24,7 +24,7 @@ public class Get : EndpointBaseAsync
         Description = "Returns a single product by its ID",
         OperationId = "Products.Get",
         Tags = new[] { "Products" })]
-    public override async Task<ActionResult<GetResponse>> HandleAsync(
+    public override async Task<ActionResult<ProductGetResponse>> HandleAsync(
         [FromRoute] Guid id,
         CancellationToken cancellationToken = default)
     {

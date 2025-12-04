@@ -9,8 +9,8 @@ namespace BetterThanYou.Web.Endpoints.Products;
 
 [Authorize]
 public class Update : EndpointBaseAsync
-    .WithRequest<UpdateRequest>
-    .WithActionResult<UpdateResponse>
+    .WithRequest<ProductUpdateRequest>
+    .WithActionResult<ProductUpdateResponse>
 {
     private readonly IProductService _productService;
     private readonly IFileStorageService _fileStorageService;
@@ -27,8 +27,8 @@ public class Update : EndpointBaseAsync
         Description = "Updates an existing product",
         OperationId = "Products.Update",
         Tags = new[] { "Products" })]
-    public override async Task<ActionResult<UpdateResponse>> HandleAsync(
-        [FromForm] UpdateRequest request,
+    public override async Task<ActionResult<ProductUpdateResponse>> HandleAsync(
+        [FromForm] ProductUpdateRequest request,
         CancellationToken cancellationToken = default)
     {
         var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value 
@@ -52,7 +52,7 @@ public class Update : EndpointBaseAsync
             fotoUrl,
             userId);
 
-        var response = new UpdateResponse
+        var response = new ProductUpdateResponse
         {
             Id = productDto.Id,
             Nome = productDto.Nome,
