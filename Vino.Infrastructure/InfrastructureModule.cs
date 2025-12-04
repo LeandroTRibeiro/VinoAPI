@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using BetterThanYou.Core.Interfaces.Client;
 using BetterThanYou.Core.Interfaces.File;
+using BetterThanYou.Core.Interfaces.Order;
 using BetterThanYou.Core.Interfaces.Product;
 using BetterThanYou.Core.Interfaces.Services.Account;
 using BetterThanYou.Infrastructure.Repositories;
@@ -26,6 +27,10 @@ public class InfrastructureModule : Module
         
         builder.RegisterType<ClientRepository>()
             .As<IClientRepository>()
+            .InstancePerLifetimeScope();
+        
+        builder.RegisterType<OrderRepository>()
+            .As<IOrderRepository>()
             .InstancePerLifetimeScope();
     }
     
