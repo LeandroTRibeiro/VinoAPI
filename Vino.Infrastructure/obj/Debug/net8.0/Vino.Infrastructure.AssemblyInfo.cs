@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Vino.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9bca876532cd2ed4ed888ba20ee80e4175e94ee2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+912b16707519e9892b681bd4d65fe449db234d66")]
 [assembly: System.Reflection.AssemblyProductAttribute("Vino.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Vino.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

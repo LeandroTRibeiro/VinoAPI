@@ -50,4 +50,10 @@ public class ProductRepository : IProductRepository
         _db.Products.Update(product);
         await _db.SaveChangesAsync();
     }
+    
+    public void UpdateWithoutSave(Product product)
+    {
+        _db.Products.Update(product);
+    }
+    
 }

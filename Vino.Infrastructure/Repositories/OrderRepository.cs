@@ -41,38 +41,66 @@ public class OrderRepository : IOrderRepository
             .FirstOrDefaultAsync(o => o.Id == id && o.Ativo);
     }
 
-    public async Task<Order> UpdateAsync(Order order)
+public async Task<Order> UpdateAsync(Order order)
+{
+    
+    var trackedItems = _db.ChangeTracker.Entries<OrderItem>()
+        .Where(e => e.Entity.OrderId == order.Id)
+        .ToList();
+    
+    foreach (var entry in trackedItems)
     {
-        var orderFromDb = await _db.Orders
-            .Include(o => o.Cliente)
-            .Include(o => o.Itens)
-            .ThenInclude(i => i.Produto)
-            .FirstOrDefaultAsync(o => o.Id == order.Id);
-    
-        if (orderFromDb == null)
-            throw new KeyNotFoundException("Pedido não encontrado");
-    
-        orderFromDb.ClienteId = order.ClienteId;
-        orderFromDb.Observacoes = order.Observacoes;
-        orderFromDb.EnderecoEntrega = order.EnderecoEntrega;
-        orderFromDb.DataEntregaPrevista = order.DataEntregaPrevista;
-        orderFromDb.ModificadoPor = order.ModificadoPor;
-        orderFromDb.DataModificacao = order.DataModificacao;
-        orderFromDb.ValorTotal = order.ValorTotal;
-        orderFromDb.Status = order.Status;
-        orderFromDb.DataEntregaRealizada = order.DataEntregaRealizada;
-    
-        orderFromDb.Itens.Clear();
-    
-        foreach (var item in order.Itens)
-        {
-            orderFromDb.Itens.Add(item);
-        }
-        
-        await _db.SaveChangesAsync();
-    
-        return orderFromDb;
+        entry.State = EntityState.Detached;
     }
+    
+    var deletedCount = await _db.OrderItems
+        .Where(i => i.OrderId == order.Id)
+        .ExecuteDeleteAsync();
+    
+    var orderFromDb = await _db.Orders
+        .FirstOrDefaultAsync(o => o.Id == order.Id);
+    
+    if (orderFromDb == null)
+    {
+        throw new KeyNotFoundException("Pedido não encontrado");
+    }
+    
+    orderFromDb.ClienteId = order.ClienteId;
+    orderFromDb.Observacoes = order.Observacoes;
+    orderFromDb.EnderecoEntrega = order.EnderecoEntrega;
+    orderFromDb.DataEntregaPrevista = order.DataEntregaPrevista;
+    orderFromDb.ModificadoPor = order.ModificadoPor;
+    orderFromDb.DataModificacao = order.DataModificacao;
+    orderFromDb.ValorTotal = order.ValorTotal;
+    orderFromDb.Status = order.Status;
+    orderFromDb.DataEntregaRealizada = order.DataEntregaRealizada;
+    
+    foreach (var item in order.Itens)
+    {
+        item.OrderId = orderFromDb.Id;
+        await _db.OrderItems.AddAsync(item);
+    }
+    
+    var entries = _db.ChangeTracker.Entries().ToList();
+    
+    foreach (var entry in entries)
+    {
+    }
+    
+    try
+    {
+        var changes = await _db.SaveChangesAsync();
+    }
+    catch (Exception ex)
+    {
+        throw;
+    }
+    
+    await _db.Entry(orderFromDb).Collection(o => o.Itens).LoadAsync();
+    
+    
+    return orderFromDb;
+}
 
     public async Task DeleteAsync(Order order)
     {

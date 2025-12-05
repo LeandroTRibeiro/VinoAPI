@@ -7,4 +7,5 @@ public interface IProductRepository
     Task<Entities.Product> GetByIdAsync(Guid id);
     Task<Entities.Product> UpdateAsync(Entities.Product product);
     Task DeleteAsync(Entities.Product product);
+    void UpdateWithoutSave(Entities.Product product);
 }
