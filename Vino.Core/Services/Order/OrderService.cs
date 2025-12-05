@@ -17,62 +17,71 @@ public class OrderService : IOrderService
         _productRepository = productRepository;
     }
 
-    public async Task<OrderDto> CreateAsync(Guid clienteId, List<OrderItemCreateDto> itens,
-        string? observacoes, string? enderecoEntrega, DateTime? dataEntregaPrevista, string criadoPor)
+public async Task<OrderDto> CreateAsync(Guid clienteId, List<OrderItemCreateDto> itens,
+    string? observacoes, string? enderecoEntrega, DateTime? dataEntregaPrevista, string criadoPor)
+{
+    if (itens == null || !itens.Any())
+        throw new ArgumentException("O pedido deve ter pelo menos um item", nameof(itens));
+
+    var numeroOrder = await _orderRepository.GenerateNextOrderNumberAsync();
+
+    var order = new Entities.Order
     {
-        if (itens == null || !itens.Any())
-            throw new ArgumentException("O pedido deve ter pelo menos um item", nameof(itens));
+        Id = Guid.NewGuid(),
+        NumeroOrder = numeroOrder,
+        ClienteId = clienteId,
+        DataPedido = DateTime.UtcNow,
+        Status = OrderStatus.Pendente,
+        Observacoes = observacoes,
+        EnderecoEntrega = enderecoEntrega,
+        DataEntregaPrevista = dataEntregaPrevista,
+        CriadoPor = criadoPor,
+        DataCriacao = DateTime.UtcNow,
+        Ativo = true,
+        Itens = new List<OrderItem>()
+    };
 
-        var numeroOrder = await _orderRepository.GenerateNextOrderNumberAsync();
+    decimal valorTotal = 0;
 
-        var order = new Entities.Order
+    foreach (var itemDto in itens)
+    {
+        var produto = await _productRepository.GetByIdAsync(itemDto.ProdutoId);
+        if (produto == null)
+            throw new KeyNotFoundException($"Produto {itemDto.ProdutoId} não encontrado");
+
+        if (itemDto.Quantidade <= 0)
+            throw new ArgumentException("Quantidade deve ser maior que zero");
+
+        if (produto.QuantidadeEstoque < itemDto.Quantidade)
+            throw new InvalidOperationException(
+                $"Estoque insuficiente para o produto '{produto.Nome}'. " +
+                $"Disponível: {produto.QuantidadeEstoque}, Solicitado: {itemDto.Quantidade}");
+
+        var subtotal = produto.PrecoVenda * itemDto.Quantidade;
+        valorTotal += subtotal;
+
+        var orderItem = new OrderItem
         {
             Id = Guid.NewGuid(),
-            NumeroOrder = numeroOrder,
-            ClienteId = clienteId,
-            DataPedido = DateTime.UtcNow,
-            Status = OrderStatus.Pendente,
-            Observacoes = observacoes,
-            EnderecoEntrega = enderecoEntrega,
-            DataEntregaPrevista = dataEntregaPrevista,
-            CriadoPor = criadoPor,
-            DataCriacao = DateTime.UtcNow,
-            Ativo = true,
-            Itens = new List<OrderItem>()
+            OrderId = order.Id,
+            ProdutoId = produto.Id,
+            Quantidade = itemDto.Quantidade,
+            PrecoUnitario = produto.PrecoVenda,
+            Subtotal = subtotal
         };
 
-        decimal valorTotal = 0;
+        order.Itens.Add(orderItem);
 
-        foreach (var itemDto in itens)
-        {
-            var produto = await _productRepository.GetByIdAsync(itemDto.ProdutoId);
-            if (produto == null)
-                throw new KeyNotFoundException($"Produto {itemDto.ProdutoId} não encontrado");
-
-            if (itemDto.Quantidade <= 0)
-                throw new ArgumentException("Quantidade deve ser maior que zero");
-
-            var subtotal = produto.PrecoVenda * itemDto.Quantidade;
-            valorTotal += subtotal;
-
-            var orderItem = new OrderItem
-            {
-                Id = Guid.NewGuid(),
-                ProdutoId = produto.Id,
-                Quantidade = itemDto.Quantidade,
-                PrecoUnitario = produto.PrecoVenda,
-                Subtotal = subtotal
-            };
-
-            order.Itens.Add(orderItem);
-        }
-
-        order.ValorTotal = valorTotal;
-
-        var created = await _orderRepository.CreateAsync(order);
-
-        return await MapToDto(created);
+        produto.QuantidadeEstoque -= itemDto.Quantidade;
+        await _productRepository.UpdateAsync(produto);
     }
+
+    order.ValorTotal = valorTotal;
+
+    await _orderRepository.CreateAsync(order);
+
+    return await MapToDto(order);
+}
 
     public async Task<List<OrderDto>> GetAllAsync()
     {
@@ -111,6 +120,17 @@ public class OrderService : IOrderService
         if (itens == null || !itens.Any())
             throw new ArgumentException("O pedido deve ter pelo menos um item", nameof(itens));
 
+        // ← DEVOLVER ESTOQUE DOS ITENS ANTIGOS
+        foreach (var itemAntigo in order.Itens)
+        {
+            var produto = await _productRepository.GetByIdAsync(itemAntigo.ProdutoId);
+            if (produto != null)
+            {
+                produto.QuantidadeEstoque += itemAntigo.Quantidade;
+                await _productRepository.UpdateAsync(produto);
+            }
+        }
+
         order.ClienteId = clienteId;
         order.Observacoes = observacoes;
         order.EnderecoEntrega = enderecoEntrega;
@@ -118,13 +138,12 @@ public class OrderService : IOrderService
         order.ModificadoPor = modificadoPor;
         order.DataModificacao = DateTime.UtcNow;
 
-        // ← NÃO LIMPAR AQUI! Comentar esta linha:
-        // order.Itens.Clear();
-
-        // Criar lista de novos itens
-        var novosItens = new List<OrderItem>();
         decimal valorTotal = 0;
 
+        // Limpar itens antigos
+        order.Itens.Clear();
+
+        // ← ADICIONAR NOVOS ITENS E DECREMENTAR ESTOQUE
         foreach (var itemDto in itens)
         {
             var produto = await _productRepository.GetByIdAsync(itemDto.ProdutoId);
@@ -133,6 +152,12 @@ public class OrderService : IOrderService
 
             if (itemDto.Quantidade <= 0)
                 throw new ArgumentException("Quantidade deve ser maior que zero");
+
+            // Validar estoque disponível
+            if (produto.QuantidadeEstoque < itemDto.Quantidade)
+                throw new InvalidOperationException(
+                    $"Estoque insuficiente para o produto '{produto.Nome}'. " +
+                    $"Disponível: {produto.QuantidadeEstoque}, Solicitado: {itemDto.Quantidade}");
 
             var subtotal = produto.PrecoVenda * itemDto.Quantidade;
             valorTotal += subtotal;
@@ -147,13 +172,16 @@ public class OrderService : IOrderService
                 Subtotal = subtotal
             };
 
-            novosItens.Add(orderItem);
+            order.Itens.Add(orderItem);
+
+            // ← DECREMENTAR ESTOQUE DOS NOVOS ITENS
+            produto.QuantidadeEstoque -= itemDto.Quantidade;
+            await _productRepository.UpdateAsync(produto);
         }
 
         order.ValorTotal = valorTotal;
-        
-        // ← PASSAR OS NOVOS ITENS PARA O REPOSITORY
-        var updated = await _orderRepository.UpdateWithItemsAsync(order, novosItens);
+
+        var updated = await _orderRepository.UpdateWithItemsAsync(order, order.Itens.ToList());
 
         return await MapToDto(updated);
     }
@@ -165,6 +193,39 @@ public class OrderService : IOrderService
         if (order == null)
             throw new KeyNotFoundException("Pedido não encontrado");
 
+        var statusAnterior = order.Status;
+        
+        if (status == OrderStatus.Cancelado && statusAnterior != OrderStatus.Cancelado)
+        {
+            foreach (var item in order.Itens)
+            {
+                var produto = await _productRepository.GetByIdAsync(item.ProdutoId);
+                if (produto == null)
+                    throw new KeyNotFoundException($"Produto {item.ProdutoId} não encontrado");
+
+                produto.QuantidadeEstoque += item.Quantidade;
+                await _productRepository.UpdateAsync(produto);
+            }
+        }
+        
+        if (statusAnterior == OrderStatus.Cancelado && status != OrderStatus.Cancelado)
+        {
+            foreach (var item in order.Itens)
+            {
+                var produto = await _productRepository.GetByIdAsync(item.ProdutoId);
+                if (produto == null)
+                    throw new KeyNotFoundException($"Produto {item.ProdutoId} não encontrado");
+
+                if (produto.QuantidadeEstoque < item.Quantidade)
+                    throw new InvalidOperationException(
+                        $"Estoque insuficiente para o produto '{produto.Nome}'. " +
+                        $"Disponível: {produto.QuantidadeEstoque}, Necessário: {item.Quantidade}");
+
+                produto.QuantidadeEstoque -= item.Quantidade;
+                await _productRepository.UpdateAsync(produto);
+            }
+        }
+
         order.Status = status;
         order.ModificadoPor = modificadoPor;
         order.DataModificacao = DateTime.UtcNow;
@@ -174,7 +235,7 @@ public class OrderService : IOrderService
             order.DataEntregaRealizada = DateTime.UtcNow;
         }
 
-        var updated = await _orderRepository.UpdateStatusAsync(order);  // ← USAR O NOVO MÉTODO
+        var updated = await _orderRepository.UpdateStatusAsync(order);
 
         return await MapToDto(updated);
     }
@@ -182,9 +243,22 @@ public class OrderService : IOrderService
     public async Task DeleteAsync(Guid id)
     {
         var order = await _orderRepository.GetByIdAsync(id);
-
+    
         if (order == null)
             throw new KeyNotFoundException("Pedido não encontrado");
+
+        if (order.Status != OrderStatus.Cancelado)
+        {
+            foreach (var item in order.Itens)
+            {
+                var produto = await _productRepository.GetByIdAsync(item.ProdutoId);
+                if (produto != null)
+                {
+                    produto.QuantidadeEstoque += item.Quantidade;
+                    await _productRepository.UpdateAsync(produto);
+                }
+            }
+        }
 
         await _orderRepository.DeleteAsync(order);
     }
