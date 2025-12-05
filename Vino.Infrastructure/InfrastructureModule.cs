@@ -3,6 +3,7 @@ using BetterThanYou.Core.Interfaces.Client;
 using BetterThanYou.Core.Interfaces.File;
 using BetterThanYou.Core.Interfaces.Order;
 using BetterThanYou.Core.Interfaces.Product;
+using BetterThanYou.Core.Interfaces.Route;
 using BetterThanYou.Core.Interfaces.Services.Account;
 using BetterThanYou.Infrastructure.Repositories;
 using BetterThanYou.Infrastructure.Services;
@@ -31,6 +32,10 @@ public class InfrastructureModule : Module
         
         builder.RegisterType<OrderRepository>()
             .As<IOrderRepository>()
+            .InstancePerLifetimeScope();
+        
+        builder.RegisterType<RouteRepository>()
+            .As<IRouteRepository>()
             .InstancePerLifetimeScope();
     }
     

@@ -17,6 +17,8 @@ if (File.Exists(".env"))
 
 var builder = WebApplication.CreateBuilder(args);
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 var connectionString = Environment.GetEnvironmentVariable("DB_HOST") != null
     ? $"Host={Environment.GetEnvironmentVariable("DB_HOST")};" +
       $"Port={Environment.GetEnvironmentVariable("DB_PORT")};" +

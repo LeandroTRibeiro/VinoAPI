@@ -290,6 +290,155 @@ namespace BetterThanYou.Infrastructure.Migrations
                     b.ToTable("Product", (string)null);
                 });
 
+            modelBuilder.Entity("BetterThanYou.Core.Entities.Route", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("Ativo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("CepPartida")
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
+                    b.Property<string>("CidadePartida")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("CriadoPor")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DataModificacao")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DataOtimizacao")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DataRota")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Descricao")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<double?>("DistanciaTotal")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("EnderecoPartida")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("EstadoPartida")
+                        .HasMaxLength(2)
+                        .HasColumnType("character varying(2)");
+
+                    b.Property<double?>("LatitudePartida")
+                        .HasPrecision(10, 8)
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("LongitudePartida")
+                        .HasPrecision(11, 8)
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("ModificadoPor")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<bool>("Otimizada")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("TempoEstimado")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DataRota");
+
+                    b.HasIndex("Status");
+
+                    b.HasIndex("Ativo", "DataRota");
+
+                    b.ToTable("Routes", (string)null);
+                });
+
+            modelBuilder.Entity("BetterThanYou.Core.Entities.RouteStop", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ClienteId")
+                        .HasColumnType("uuid");
+
+                    b.Property<double?>("DistanciaParadaAnterior")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("double precision");
+
+                    b.Property<DateTime?>("HorarioChegadaPrevisto")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("HorarioChegadaReal")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("HorarioSaidaReal")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<double?>("Latitude")
+                        .HasPrecision(10, 8)
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("Longitude")
+                        .HasPrecision(11, 8)
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("Observacoes")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<int>("OrdemOriginal")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("OrdemOtimizada")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("RouteId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("TempoParadaAnterior")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("Visitado")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClienteId");
+
+                    b.HasIndex("RouteId");
+
+                    b.HasIndex("RouteId", "OrdemOtimizada");
+
+                    b.ToTable("RouteStops", (string)null);
+                });
+
             modelBuilder.Entity("BetterThanYou.Core.Entities.Order", b =>
                 {
                     b.HasOne("BetterThanYou.Core.Entities.Client", "Cliente")
@@ -320,9 +469,33 @@ namespace BetterThanYou.Infrastructure.Migrations
                     b.Navigation("Produto");
                 });
 
+            modelBuilder.Entity("BetterThanYou.Core.Entities.RouteStop", b =>
+                {
+                    b.HasOne("BetterThanYou.Core.Entities.Client", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BetterThanYou.Core.Entities.Route", "Route")
+                        .WithMany("Paradas")
+                        .HasForeignKey("RouteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cliente");
+
+                    b.Navigation("Route");
+                });
+
             modelBuilder.Entity("BetterThanYou.Core.Entities.Order", b =>
                 {
                     b.Navigation("Itens");
+                });
+
+            modelBuilder.Entity("BetterThanYou.Core.Entities.Route", b =>
+                {
+                    b.Navigation("Paradas");
                 });
 #pragma warning restore 612, 618
         }

@@ -51,7 +51,7 @@ public class Create : EndpointBaseAsync
             {
                 var options = new System.Text.Json.JsonSerializerOptions
                 {
-                    PropertyNameCaseInsensitive = true  // ← ADICIONE ESTA OPÇÃO
+                    PropertyNameCaseInsensitive = true 
                 };
                 telefones = System.Text.Json.JsonSerializer.Deserialize<List<ContactPhone>>(request.Telefones, options) 
                             ?? new List<ContactPhone>();

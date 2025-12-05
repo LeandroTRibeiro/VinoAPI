@@ -21,7 +21,7 @@ public class Update : EndpointBaseAsync
         _fileStorageService = fileStorageService;
     }
     
-    [HttpPut("api/v1/products")]  // ← SEM {id}
+    [HttpPut("api/v1/products")]  
     [SwaggerOperation(
         Summary = "Update a product",
         Description = "Updates an existing product",
